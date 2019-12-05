@@ -20,4 +20,10 @@ class Form {
     $res = FormModel::getForm($data['name']);
     return json($res);
   }
+
+  public function testUpload() {
+    $data = request()->param('file');
+    dump($data);
+    
+  }
 }

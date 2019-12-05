@@ -7,6 +7,7 @@ Route::group($fix, function() {
   Route::group('form', function() {
     Route::post('add', 'Form/add');
     Route::get('get', 'Form/get');
+    Route::post('upload', 'Form/testUpload');
   });
 })->prefix($fix . '/')
 ->header('Access-Control-Allow-Credentials', 'true')
