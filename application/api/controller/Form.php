@@ -22,8 +22,13 @@ class Form {
   }
 
   public function testUpload() {
-    $data = request()->param('file');
-    dump($data);
+    $file = request()->file('file');
+    $info = $file->move('static/upload');
+    if($info) {
+      return json($info->getSaveName());
+    }else {
+      return json($file->getError());
+    }
     
   }
 }
