@@ -3,9 +3,11 @@ namespace app\api\model;
 use think\Model;
 class Form extends Model {
   protected $pk = 'id';
-  // 获取form表单时将json转为数组
+  // 获取form表单时将json转为数组 并处理上传组件中的回调函数
   public function getFormsAttr($val) {
-    return json_decode($val);
+    $data = json_decode($val);
+    
+    return $data;
   }
   // 添加表单
   public static function addForm($arr) {

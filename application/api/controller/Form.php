@@ -18,6 +18,9 @@ class Form {
     $data = request()->param();
 
     $res = FormModel::getForm($data['name']);
+    
+    
+    // dump($res);
     return json($res);
   }
 
@@ -25,7 +28,7 @@ class Form {
     $file = request()->file('file');
     $info = $file->move('static/upload');
     if($info) {
-      return json($info->getSaveName());
+      return json('http://' . request()->host() . '/static/upload/' . $info->getSaveName());
     }else {
       return json($file->getError());
     }
