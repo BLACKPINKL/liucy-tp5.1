@@ -11,6 +11,7 @@ class ExceptionBasic extends Handle {
   protected $code;
   protected $errCode;
   public function render(Exception $e) {
+    
     if($e instanceof BaseException) {
       // 自定义错误. 获取自定义类中的定义属性
       $this->msg = $e->msg;

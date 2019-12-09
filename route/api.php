@@ -9,6 +9,10 @@ Route::group($fix, function() {
     Route::get('get', 'Form/get');
     Route::post('upload', 'Form/testUpload');
   });
+
+  Route::group('user', function() {
+    Route::post('login', 'User/login');
+  });
 })->prefix($fix . '/')
 ->header('Access-Control-Allow-Credentials', 'true')
 ->header('Access-Control-Allow-Headers', 'Authorization, authori-zation, Content-Type, X-Requested-With')

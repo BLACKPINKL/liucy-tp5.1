@@ -9,13 +9,13 @@ use \Firebase\JWT\SignatureInvalidException as SignatureEx;
 use \Firebase\JWT\ExpiredException as ExpiredEx;
 use app\exception\BaseException;
 class JwtAuthTraits {
-  private $key;
+  private static $key;
   public function __construct() {
-    $this->key = Env::get('app.app_key', 'liucy_admin');
+    self::$key = Env::get('app.app_key', 'liucy_admin');
   }
   public static function geteToken(array $params = []) {
     // 私钥
-    $key = $this->key;
+    $key = self::$key;
     $host = request()->host();
     $time = time();
     $params += [
@@ -34,7 +34,7 @@ class JwtAuthTraits {
   public static function parseToken(string $token) {
     try {
       JWT::$leeway = 60;
-      $data = JWT::decode($token, $this->key, array('HS256'));
+      $data = JWT::decode($token, self::$key, array('HS256'));
 
       return json($data);
     }catch(SignatureEx $e) {

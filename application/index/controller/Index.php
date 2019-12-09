@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
-
+use app\api\model\User;
+use \service\JsonService;
 class Index
 {
     public function index()
@@ -11,7 +12,13 @@ class Index
 
     public function hello($name = 'ThinkPHP5')
     {
-        $str = encodeStr('admin', '158Q757E9610B41');
+        $user = User::where('account', [null])->find();
+        dump($user);
+        $str = 'world';
+        // dump($user->salt);
+        // $str = encodeStr('21232F297A57A5A743894A0E4A801FC3', 'c1X57P5g87017I8');
+        // $data = JsonService::success(['aa' => 'asdasd']);
+        // dump($data);
         return 'hello,' . $str;
     }
 }
