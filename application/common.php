@@ -11,10 +11,18 @@
 
 // 应用公共文件
 
-use think\Env;
+// 生成 n位随机不重复的字符串
+function randStr($len) {
+  $chars ='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz';
+  $string = time();
+  for(;$len >= 1; $len--) {
+    $position = rand() % strlen($chars);
+    $position2 = rand() % strlen($string);
+    $string = substr_replace($string, substr($chars, $position, 1), $position2, 0);
+  }
+  return $string;
+}
 
-function strToMd5(string $str) {
-  // 加盐加密
-  $slat = Env::get('app.app_slat');
-  
+function encodeStr($str, $salt) {
+  return md5(md5($str) . $salt);
 }
