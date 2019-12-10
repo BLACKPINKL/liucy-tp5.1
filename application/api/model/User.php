@@ -18,7 +18,7 @@ class User extends ModelBasic {
     $salt = $user->salt;
     $code = encodeStr($pass, $salt);
     // // 比较密码是否匹配
-    if(strcmp($code, $user->password) === -1) throw new BaseException(['msg' => '密码错误', 'errCode' => 10005]);
+    if($code !== $user->password) throw new BaseException(['msg' => '密码错误', 'errCode' => 10005]);
     
     // // 校验通过 获取 token 存入当前用户信息
     $params = ['data' => [
@@ -26,7 +26,7 @@ class User extends ModelBasic {
       'user' => $account
       ]
     ];
-    $token = JwtAuthTraits::geteToken();
+    $token = JwtAuthTraits::geteToken($params);
     $params['data'] += compact('token');
     return $params;
   }

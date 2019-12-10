@@ -7,8 +7,8 @@ class ValidateService extends Validate {
   public function goCheck() {
     // 获取请求参数
     $params = request()->param();
-    $res = $this->batch()->check($params);
-    if(!$res) throw new BaseException(['msg' => '请求参数不合法', 'errCode' => 777]);
-    return true;
+    $res = $this->check($params);
+    if(!$res) throw new BaseException(['msg' => $this->getError(), 'errCode' => 777]);
+    return $params;
   }
 }

@@ -12,11 +12,11 @@ class Index
 
     public function hello($name = 'ThinkPHP5')
     {
-        $user = User::where('account', [null])->find();
-        dump($user);
+        // $user = User::where('account', [null])->find();
+        // dump($user);
         $str = 'world';
         // dump($user->salt);
-        // $str = encodeStr('21232F297A57A5A743894A0E4A801FC3', 'c1X57P5g87017I8');
+        $str = encodeStr('4124BC0A9335C27F086F24BA207A4912', 'c1X57P5g87017I8');
         // $data = JsonService::success(['aa' => 'asdasd']);
         // dump($data);
         return 'hello,' . $str;
