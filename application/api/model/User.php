@@ -27,7 +27,7 @@ class User extends ModelBasic {
       ]
     ];
     $token = JwtAuthTraits::geteToken($params);
-    $params['data'] += compact('token');
+    $params['data']['token'] = $token;
     return $params;
   }
 }

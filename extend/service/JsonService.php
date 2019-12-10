@@ -9,6 +9,7 @@ class JsonService {
     $msg = self::$msg;
     $code = self::$code;
     $errCode = self::$errCode;
+    
     $data += compact('msg', 'errCode');
     return json($data, $code);
   }

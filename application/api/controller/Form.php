@@ -2,26 +2,24 @@
 
 namespace app\api\controller;
 use app\api\model\Form as FormModel;
+use app\api\validate\FormValidate;
+use \service\JsonService;
+
 class Form {
+  // 添加表单
   public function add() {
-    $data = request()->param();
+    $data = (new FormValidate)->goCheck();
     // dump($data);
     $res = FormModel::addForm($data);
-    if($res) {
-      return json('成功');
-    }else {
-      return json('失败');
-    }
+    return JsonService::success();
   }
-
+  // 获取表单
   public function get() {
-    $data = request()->param();
+    $data = (new FormValidate)->goCheck('get');
 
     $res = FormModel::getForm($data['name']);
     
-    
-    // dump($res);
-    return json($res);
+    return JsonService::success(['data' => $res->toArray()]);
   }
 
   public function testUpload() {

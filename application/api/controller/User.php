@@ -7,6 +7,6 @@ class User {
   public function login() {
     $data = (new UserValidate)->goCheck();
     $token = UserModel::login($data);
-    return JsonService::success(compact('token'));
+    return JsonService::success($token);
   }
 }
