@@ -2,17 +2,20 @@
 
 // 接口路由
 $fix = 'api';
-
 Route::group($fix, function() {
+  // 表单生成接口
   Route::group('form', function() {
-    Route::post('add', 'Form/add');
-    Route::get('get', 'Form/get');
-    Route::get('delete', 'Form/delete');
-    Route::get('getAll', 'Form/getAll');
+    Route::post('add', '/add');
+    Route::get('get', '/get');
+    Route::get('delete', '/delete');
+    Route::get('getAll', '/getAll');
+  })->prefix('api/Form');
 
-    
-    Route::post('upload', 'Form/testUpload');
-  });
+  Route::group('brand', function() {
+    Route::post('add', '/add');
+  })->prefix('api/Brand');
+
+  
 
   
 })->prefix($fix . '/')
@@ -26,10 +29,15 @@ Route::group($fix, function() {
 
 // 登录接口单独抽离
 Route::group($fix, function() {
+  
   Route::group('user', function() {
 
     Route::post('login', 'User/login');
   });
+
+  // 上传接口
+  Route::post('upload/up', 'Upload/upload');
+  
 })->prefix($fix . '/')
 ->header('Access-Control-Allow-Credentials', 'true')
 ->header('Access-Control-Allow-Origin','http://localhost:8080')

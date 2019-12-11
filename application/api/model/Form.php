@@ -22,8 +22,10 @@ class Form extends ModelBasic {
   // 获取表单
   public static function getForm($name = '') {
     $data = null;
-    if($name) $data = self::getByName($name);
+    if($name) $data = self::where('name', $name)->find();
     else $data = self::all();
+
+    if(!$data) return [];
     return $data->toArray();
   }
 

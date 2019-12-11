@@ -37,14 +37,5 @@ class Form {
     return JsonService::success(['data' => $res]);
   }
 
-  public function testUpload() {
-    $file = request()->file('file');
-    $info = $file->move('static/upload');
-    if($info) {
-      return json('http://' . request()->host() . '/static/upload/' . $info->getSaveName());
-    }else {
-      return json($file->getError());
-    }
-    
-  }
+  
 }
