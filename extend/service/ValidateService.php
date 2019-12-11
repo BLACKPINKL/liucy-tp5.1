@@ -4,12 +4,13 @@ use app\exception\BaseException;
 use think\Validate;
 // 全局请求参数校验
 class ValidateService extends Validate {
-  public function goCheck($scene = '') {
+  public function goCheck($params = []) {
     // 获取请求参数
-    $params = request()->param();
-    if(!$scene) $res = $this->check($params);
-    else $res = $this->scene($scene)->check($params);
+    $data = request()->param();
+    // 判断是否传入scene为验证场景
+    if(!array_key_exists('scene', $params)) $res = $this->check($data);
+    else $res = $this->scene($params['scene'])->check($data);
     if(!$res) throw new BaseException(['msg' => $this->getError(), 'errCode' => 777]);
-    return $params;
+    return $data;
   }
 }

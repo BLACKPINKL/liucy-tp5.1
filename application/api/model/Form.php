@@ -20,9 +20,17 @@ class Form extends ModelBasic {
     return $res;
   }
   // 获取表单
-  public static function getForm($name) {
-    $data = self::getByName($name);
-    return $data;
+  public static function getForm($name = '') {
+    $data = null;
+    if($name) $data = self::getByName($name);
+    else $data = self::all();
+    return $data->toArray();
+  }
+
+  public static function delFormInId($id) {
+    $res = self::get($id)->delete();
+    if(!$res) throw new Exception('删除失败');
+    return $res;
   }
 
 }

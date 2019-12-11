@@ -7,6 +7,10 @@ Route::group($fix, function() {
   Route::group('form', function() {
     Route::post('add', 'Form/add');
     Route::get('get', 'Form/get');
+    Route::get('delete', 'Form/delete');
+    Route::get('getAll', 'Form/getAll');
+
+    
     Route::post('upload', 'Form/testUpload');
   });
 
@@ -17,6 +21,8 @@ Route::group($fix, function() {
 ->header('Access-Control-Allow-Headers', 'Authorization, authori-zation, Content-Type, X-Requested-With')
 ->middleware('auth')
 ->allowCrossDomain();
+
+
 
 // 登录接口单独抽离
 Route::group($fix, function() {
