@@ -13,6 +13,8 @@ Route::group($fix, function() {
 
   Route::group('brand', function() {
     Route::post('add', '/add');
+    Route::get('get', '/get');
+    Route::get('del', '/del');
   })->prefix('api/Brand');
 
   

@@ -2,6 +2,8 @@
 namespace app\index\controller;
 use app\api\model\User;
 use \service\JsonService;
+use think\Db;
+
 class Index
 {
     public function index()
@@ -19,6 +21,8 @@ class Index
         $str = encodeStr('4124BC0A9335C27F086F24BA207A4912', 'c1X57P5g87017I8');
         // $data = JsonService::success(['aa' => 'asdasd']);
         // dump($data);
+        // $brand = Db::name('brand')::onlyTrashed()->find(1);
+        // $brand->restore();
         return 'hello,' . $str;
     }
 }
