@@ -24,9 +24,9 @@ Route::group($fix, function() {
   Route::group('cate', function() {
     Route::post('add', '/add');
     Route::get('get', '/get');
-    // Route::get('getById', '/getById');
+    Route::get('getById', '/getById');
     Route::get('del', '/del');
-    // Route::post('update', '/update');
+    Route::post('update', '/update');
     // Route::get('recover', '/recover');
   })->prefix('api/Cate');
 

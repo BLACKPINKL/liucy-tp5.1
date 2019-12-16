@@ -19,7 +19,24 @@ class CateValidate extends ValidateService {
       'description',
       'show_nav',
       'pid'
-    ]);
+    ])->append('cate_name', 'unique:cate');
+  }
+  
+  public function sceneUpdate() {
+    return $this->only([
+      'cate_name',
+      'description',
+      'show_nav',
+      'pid',
+      'id'
+    ])->remove('id', 'notBetween');
+  }
+
+
+
+  public function sceneGetById() {
+    return $this->only(['id'])
+    ->remove('id', 'notBetween');
   }
 
   public function sceneDel() {

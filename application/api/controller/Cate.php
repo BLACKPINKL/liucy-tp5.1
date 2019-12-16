@@ -13,7 +13,18 @@ class Cate {
   }
   public function get() {
     $res = CateModel::getCate();
-    return JsonService::success(['data' =>$res]);
+    return JsonService::success(['data' => $res]);
+  }
+  public function getById() {
+    $data = (new CateValidate)->goCheck(['scene' => 'getById']);
+    $res = CateModel::getCateById($data['id']);
+    return JsonService::success(['data' => $res]);
+  }
+
+  public function update() {
+    $data = (new CateValidate)->goCheck(['scene' => 'update']);
+    $res = CateModel::updateCate($data);
+    return JsonService::success();
   }
   public function del() {
     $data = (new CateValidate)->goCheck(['scene' => 'del']);
