@@ -14,4 +14,10 @@ class Cate extends ModelBasic {
     if(!$res) return [];
     return $res->toArray();
   }
+  public static function delCate($id) {
+    
+    $res = self::destroy($id);
+    if(!$res) throw new Exception("删除分类失败");
+    return $res;
+  }
 }
