@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-12-16 16:50:12
+Date: 2019-12-17 16:57:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -44,15 +44,29 @@ CREATE TABLE `liucy_article` (
 DROP TABLE IF EXISTS `liucy_article_auth`;
 CREATE TABLE `liucy_article_auth` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `article_id` smallint(6) NOT NULL COMMENT '文章id',
+  `auth_id` int(11) NOT NULL COMMENT '作者id',
+  PRIMARY KEY (`auth_id`,`article_id`,`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of liucy_article_auth
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for liucy_auth
+-- ----------------------------
+DROP TABLE IF EXISTS `liucy_auth`;
+CREATE TABLE `liucy_auth` (
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `auth_name` char(15) DEFAULT NULL COMMENT '作者',
   `email` char(32) DEFAULT NULL COMMENT '邮箱',
-  `article_id` smallint(6) DEFAULT NULL COMMENT '文章id',
   `description` varchar(100) DEFAULT NULL COMMENT '简介',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of liucy_article_auth
+-- Records of liucy_auth
 -- ----------------------------
 
 -- ----------------------------
@@ -68,16 +82,17 @@ CREATE TABLE `liucy_cate` (
   `show_nav` tinyint(1) DEFAULT '0' COMMENT '显示到导航栏    1:显示 0 隐藏',
   `pid` smallint(6) DEFAULT '1' COMMENT '上级栏目id 1：顶级分类',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of liucy_cate
 -- ----------------------------
 INSERT INTO `liucy_cate` VALUES ('1', '系统', '1', '系统', '系统', '0', '0');
-INSERT INTO `liucy_cate` VALUES ('2', '网店帮助', '5', '网店帮助', '网店帮助', '1', '1');
-INSERT INTO `liucy_cate` VALUES ('3', '网店信息', '5', '网店信息', '网店信息', '1', '1');
-INSERT INTO `liucy_cate` VALUES ('4', '新手上路', '5', '新手上路2', '新手上路2', '1', '2');
-INSERT INTO `liucy_cate` VALUES ('5', '配送与支付', '5', '配送与支付', '配送与支付', '1', '2');
+INSERT INTO `liucy_cate` VALUES ('2', '网店帮助', '2', '网店帮助', '网店帮助', '1', '1');
+INSERT INTO `liucy_cate` VALUES ('3', '网店信息', '3', '网店信息', '网店信息', '1', '1');
+INSERT INTO `liucy_cate` VALUES ('4', '新手上路', '4', '新手上路2', '新手上路2', '1', '2');
+INSERT INTO `liucy_cate` VALUES ('5', '配送与支付', '4', '配送与支付', '配送与支付', '1', '2');
+INSERT INTO `liucy_cate` VALUES ('6', 'test', '5', 'test', 'test', '1', '0');
 
 -- ----------------------------
 -- Table structure for liucy_form

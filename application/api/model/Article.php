@@ -4,7 +4,12 @@ use Exception;
 use basic\ModelBasic;
 
 class Article extends ModelBasic {
-  public function addArticle($data) {
+  // 关联作者模型 多对多关系
+  public function auth() {
+    return $this->belongsToMany('Auth', 'app\\api\\model\\ArticleAuth');
+  }
+
+  public static function addArticle($data) {
     $res = self::create($data);
     if(!$res) throw new Exception("添加分类失败");
     return $res;
