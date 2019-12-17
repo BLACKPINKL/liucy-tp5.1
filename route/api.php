@@ -27,8 +27,17 @@ Route::group($fix, function() {
     Route::get('getById', '/getById');
     Route::get('del', '/del');
     Route::post('update', '/update');
-    // Route::get('recover', '/recover');
   })->prefix('api/Cate');
+
+
+  Route::group('article', function() {
+    Route::post('add', '/add');
+    Route::get('get', '/get');
+    Route::get('getById', '/getById');
+    Route::get('del', '/del');
+    Route::post('update', '/update');
+    // Route::get('recover', '/recover');
+  })->prefix('api/Article');
 
   
 
