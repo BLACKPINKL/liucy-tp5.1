@@ -10,17 +10,38 @@ class Article extends ModelBasic {
   }
 
   public function addArticle($data) {
-    // $article = self::get(1);
-    // dump($article);
-    $article = $this->auth();
-    // dump($article);
-    $res = $article->allowField(true)->save($data);
-    $res2 = $this->create($data);
-    dump($res);
-    // // $res = $article->auth()->save($data);
-    // if(!$res) throw new Exception("添加分类失败");
-    // return $res;
+    // 添加文章
+    $res = self::create($data);
+    // 获取刚添加的文章id
+    $id = $res->id;
+    $article = self::get($id);
+    $auth_name = $data['auth_name'];
+    $email = $data['email'];
+    // 判断该文章下是否有作者
+      $auth = Auth::where('auth_name', $auth_name)->find();
+      
+      // 新增作者
+      if(!$auth) {
+        $authData = compact('auth_name', 'email');
+         // 添加作者
+         $res = $article->auth()->save($authData);
+
+      }else {
+        // 更新中间表
+        $res = $article->auth()->save($auth);
+      }
+
+      
+     
+
+    
+
+
+    if(!$res) throw new Exception("添加分类失败");
+    return $res;
   }
+
+
   public function getArticles() {
     // 获取品牌数据时需要包含已经软删除的数据
     $res = self::all();

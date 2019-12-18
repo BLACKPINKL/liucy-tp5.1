@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-12-17 16:57:21
+Date: 2019-12-18 17:15:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,11 +32,19 @@ CREATE TABLE `liucy_article` (
   `cate_id` smallint(6) DEFAULT NULL COMMENT '所属分类',
   `addTime` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of liucy_article
 -- ----------------------------
+INSERT INTO `liucy_article` VALUES ('1', '阿萨德', '奥术大师多', '奥术大师大所多', null, 'http://www.baidu.com', 'asdada', '0', '1', '6', null);
+INSERT INTO `liucy_article` VALUES ('2', '啊哈哈哈', 'asdasd', 'asdasd', '', 'http://www.liucy.io/static/upload/20191218\\b0a3a215d11509f177926f5eb19f7e4e.png', '<h1>gfb<span style=\"font-weight: bold;\">gfbgfbfgb</span></h1>', '0', '1', '6', null);
+INSERT INTO `liucy_article` VALUES ('3', '啊哈哈哈', 'asdasd', 'asdasd', '', 'http://www.liucy.io/static/upload/20191218\\b0a3a215d11509f177926f5eb19f7e4e.png', '&lt;h1&gt;gfb&lt;span style=\'font-weight: bold;\'&gt;gfbgfbfgb&lt;/span&gt;&lt;/h1&gt;', '0', '1', '6', null);
+INSERT INTO `liucy_article` VALUES ('4', '啊哈哈哈aaa', 'asad', 'asdasd', '', 'http://www.liucy.io/static/upload/20191218\\b0a3a215d11509f177926f5eb19f7e4e.png', '&lt;h1&gt;gfb&lt;span style=\'font-weight: bold;\'&gt;gfbgfbfgb&lt;/span&gt;&lt;/h1&gt;', '0', '1', '6', null);
+INSERT INTO `liucy_article` VALUES ('5', '啊哈哈哈asdasd', 'asdasd', 'asdasd', '', 'http://www.liucy.io/static/upload/20191218\\b0a3a215d11509f177926f5eb19f7e4e.png', '<h1>gfb<span style=\"font-weight: bold;\">gfbgfbfgb奥术大师大所</span></h1>', '0', '1', '6', null);
+INSERT INTO `liucy_article` VALUES ('6', '啊哈哈哈aaa111', 'asad', 'asdasd', '', 'http://www.liucy.io/static/upload/20191218\\b0a3a215d11509f177926f5eb19f7e4e.png', '&lt;h1&gt;gfb&lt;span style=\'font-weight: bold;\'&gt;gfbgfbfgb&lt;/span&gt;&lt;/h1&gt;', '0', '1', '6', null);
+INSERT INTO `liucy_article` VALUES ('7', '啊哈哈哈aaa111', '15415', 'asdasd', '', 'http://www.liucy.io/static/upload/20191218\\b0a3a215d11509f177926f5eb19f7e4e.png', '&lt;h1&gt;gfb&lt;span style=\'font-weight: bold;\'&gt;gfbgfbfgb&lt;/span&gt;&lt;/h1&gt;', '0', '1', '6', null);
+INSERT INTO `liucy_article` VALUES ('25', '阿福安徽省农夫', 'asdasdsad', 'sdfsdf', 'fsdfsdf', 'http://www.liucy.io/static/upload/20191218\\ad69e691ca79f341f41bb40084867a69.png', '<p>sdfsdfsdf</p>', '0', '1', '6', null);
 
 -- ----------------------------
 -- Table structure for liucy_article_auth
@@ -46,12 +54,18 @@ CREATE TABLE `liucy_article_auth` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `article_id` smallint(6) NOT NULL COMMENT '文章id',
   `auth_id` int(11) NOT NULL COMMENT '作者id',
-  PRIMARY KEY (`auth_id`,`article_id`,`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of liucy_article_auth
 -- ----------------------------
+INSERT INTO `liucy_article_auth` VALUES ('1', '1', '1');
+INSERT INTO `liucy_article_auth` VALUES ('2', '1', '2');
+INSERT INTO `liucy_article_auth` VALUES ('3', '1', '3');
+INSERT INTO `liucy_article_auth` VALUES ('4', '3', '2');
+INSERT INTO `liucy_article_auth` VALUES ('5', '7', '2');
+INSERT INTO `liucy_article_auth` VALUES ('6', '25', '2');
 
 -- ----------------------------
 -- Table structure for liucy_auth
@@ -61,13 +75,16 @@ CREATE TABLE `liucy_auth` (
   `id` smallint(6) NOT NULL AUTO_INCREMENT,
   `auth_name` char(15) DEFAULT NULL COMMENT '作者',
   `email` char(32) DEFAULT NULL COMMENT '邮箱',
-  `description` varchar(100) DEFAULT NULL COMMENT '简介',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of liucy_auth
 -- ----------------------------
+INSERT INTO `liucy_auth` VALUES ('1', 'asd', '1251316155@qq.com');
+INSERT INTO `liucy_auth` VALUES ('2', '覃建飞', '1251316166@qq.com');
+INSERT INTO `liucy_auth` VALUES ('3', '覃建飞a', '1251316166@qq.com');
+INSERT INTO `liucy_auth` VALUES ('4', '覃建飞4', '1251316166@qq.com');
 
 -- ----------------------------
 -- Table structure for liucy_cate
