@@ -5,26 +5,27 @@ use app\api\model\Article as ArticleModel;
 use service\JsonService;
 class Article {
   public function add() {
-    $data = (new ArticleValidate())->getCheck(['scene' => 'add']);
-    $res = ArticleModel::addArticle($data);
-    return JsonService::success();
+    $data = (new ArticleValidate)->goCheck(['scene' => 'add']);
+    dump($data);
+    $res = (new ArticleModel)->addArticle($data);
+    // return JsonService::success();
   }
   public function get() {
     $res = ArticleModel::getArticles();
     return JsonService::success(['data' => $res]);
   }
   public function getById() {
-    $data = (new ArticleValidate())->getCheck(['scene' => 'getById']);
+    $data = (new ArticleValidate())->goCheck(['scene' => 'getById']);
     $res = ArticleModel::getArticleById($data['id']);
     return JsonService::success(['data' => $res]);
   }
   public function update() {
-    $data = (new ArticleValidate())->getCheck();
+    $data = (new ArticleValidate())->goCheck();
     $res = ArticleModel::updateArticle($data);
     return JsonService::success();
   }
   public function del() {
-    $data = (new ArticleValidate())->getCheck(['scene' => 'getById']);
+    $data = (new ArticleValidate())->goCheck(['scene' => 'getById']);
     $res = ArticleModel::delArticle($data['id']);
     return JsonService::success();
   }

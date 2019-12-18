@@ -23,6 +23,8 @@ class Index
         // dump($data);
         // $brand = Db::name('brand')::onlyTrashed()->find(1);
         // $brand->restore();
+        $data = request()->param();
+        dump($data);
         return 'hello,' . $str;
     }
 }

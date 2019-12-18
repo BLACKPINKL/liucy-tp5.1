@@ -5,25 +5,27 @@ use service\ValidateService;
 
 class ArticleValidate extends ValidateService {
   protected $rule = [
-    'title' => 'require|max:30',
-    'keywords' => 'max:100',
-    'description' => 'max:150',
+    'title' => 'require',
+    'description' => 'require',
     'thumb' => 'require',
-    'content' => 'require|min:25',
+    'content' => 'require',
     'show_top' => 'number|in:0,1',
     'cate_id' => 'require|number',
+    'auth_name' => 'require',
+    'email' => 'email',
     'id' => 'require|number'
   ];
 
   public function sceneAdd() {
     return $this->only([
       'title', 
-      'keywords', 
       'description', 
       'thumb', 
       'content', 
       'show_top', 
-      'cate_id', 
+      'cate_id',
+      'auth_name',
+      'email'
     ]);
   }
 
