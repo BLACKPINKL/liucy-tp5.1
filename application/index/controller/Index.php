@@ -23,8 +23,23 @@ class Index
         // dump($data);
         // $brand = Db::name('brand')::onlyTrashed()->find(1);
         // $brand->restore();
-        $data = request()->param();
-        dump($data);
+
+        $data = [
+            'a' => 123,
+            'b' => 456,
+            'c' => 789,
+            'd' => 012
+        ];
+
+        $arr = array_filter($data, function($key) {
+            // if() {
+            //     return $key;
+            // }
+            // return ;
+            dump(array_key_exists($key, ['b' => 1, 'd' => 2]));
+            
+        }, ARRAY_FILTER_USE_KEY);
+        dump($arr);
         return 'hello,' . $str;
     }
 }

@@ -15,41 +15,47 @@ class Article extends ModelBasic {
     // 获取刚添加的文章id
     $id = $res->id;
     $article = self::get($id);
+
+    // 获取传入的作者
     $auth_name = $data['auth_name'];
     $email = $data['email'];
-    // 判断该文章下是否有作者
-      $auth = Auth::where('auth_name', $auth_name)->find();
-      
-      // 新增作者
-      if(!$auth) {
-        $authData = compact('auth_name', 'email');
-         // 添加作者
-         $res = $article->auth()->save($authData);
 
-      }else {
-        // 更新中间表
-        $res = $article->auth()->save($auth);
-      }
-
-      
-     
-
+    $authData = compact('auth_name', 'email');
     
-
-
-    if(!$res) throw new Exception("添加分类失败");
+    $auth = Auth::where('auth_name', $auth_name)->find();
+    // 判断该文章下是否有作者
+    $this->upOrAddAuthAsccess($auth, $article, $authData);
+    
     return $res;
+  }
+  // 根据作者判断当前应该更新中间表还是新增作者
+  private function upOrAddAuthAsccess($auth, $article, $authData = []) {
+    // 新增作者
+    if(!$auth) {
+        // 添加作者
+      $res = $article->auth()->save($authData);
+
+    }else {
+      // 更新中间表
+      $res = $article->auth()->save($auth);
+    }
+
+    if(!$res) throw new Exception("更新或添加作者失败");
+
+    return $res;
+
+
   }
 
 
-  public function getArticles() {
-    // 获取品牌数据时需要包含已经软删除的数据
-    $res = self::all();
+  public static function getArticles() {
+    // 预加载关联查询
+    $res = self::all([], 'auth');
     if(!$res) return [];
     return $res->toArray();
   }
   public static function getArticleById($id) {
-    // 获取品牌数据时需要包含已经软删除的数据
+    
     $res = self::get($id);
     if(!$res) return [];
     return $res->toArray();

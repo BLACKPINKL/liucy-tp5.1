@@ -2,14 +2,22 @@
 namespace app\api\controller;
 use app\api\validate\ArticleValidate;
 use app\api\model\Article as ArticleModel;
-use app\api\model\Auth as AuthModel;
+// use app\api\model\Auth as AuthModel;
 use service\JsonService;
 class Article {
+  protected $articleModel;
+  protected $articleValidate;
+  public function __construct()
+  {
+    $this->articleValidate = new ArticleValidate;
+    $this->articleModel = new ArticleModel;
+    
+  }
+
   public function add() {
-    $data = (new ArticleValidate)->goCheck(['scene' => 'add']);
+    $data = $this->articleValidate->goCheck(['scene' => 'add']);
     // dump($data);
-    $res = (new ArticleModel)->addArticle($data);
-    // $res = (new AuthModel)->addArticle($data);
+    $res = $this->articleModel->addArticle($data);
 
     return JsonService::success();
   }
