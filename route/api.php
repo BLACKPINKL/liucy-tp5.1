@@ -40,7 +40,24 @@ Route::group($fix, function() {
   })->prefix('api/Article');
 
   
+  Route::group('category', function() {
+    Route::post('add', '/add');
+    Route::get('get', '/get');
+    Route::get('getById', '/getById');
+    Route::get('del', '/del');
+    Route::post('update', '/update');
+    Route::get('recover', '/recover');
+  })->prefix('api/Category');
 
+
+  Route::group('type', function() {
+    Route::post('add', '/add');
+    Route::get('get', '/get');
+    Route::get('getById', '/getById');
+    Route::get('del', '/del');
+    Route::post('update', '/update');
+    Route::get('recover', '/recover');
+  })->prefix('api/Type');
   
 })->prefix($fix . '/')
 ->header('Access-Control-Allow-Credentials', 'true')
