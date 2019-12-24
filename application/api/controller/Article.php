@@ -1,10 +1,13 @@
 <?php
 namespace app\api\controller;
+
 use app\api\validate\ArticleValidate;
 use app\api\model\Article as ArticleModel;
+use basic\ControllerBasic;
 // use app\api\model\Auth as AuthModel;
 use service\JsonService;
-class Article {
+
+class Article extends ControllerBasic {
   protected $articleModel;
   protected $articleValidate;
   public function __construct()
@@ -19,25 +22,25 @@ class Article {
     // dump($data);
     $res = $this->articleModel->addArticle($data);
 
-    return JsonService::success();
+    return $this->suc();
   }
   public function get() {
     $res = ArticleModel::getArticles();
-    return JsonService::success(['data' => $res]);
+    return $this->suc(['data' => $res]);
   }
   public function getById() {
     $data = (new ArticleValidate())->goCheck(['scene' => 'getById']);
     $res = ArticleModel::getArticleById($data['id']);
-    return JsonService::success(['data' => $res]);
+    return $this->suc(['data' => $res]);
   }
   public function update() {
     $data = (new ArticleValidate())->goCheck();
     $res = ArticleModel::updateArticle($data);
-    return JsonService::success();
+    return $this->suc();
   }
   public function del() {
     $data = (new ArticleValidate())->goCheck(['scene' => 'getById']);
     $res = ArticleModel::delArticle($data['id']);
-    return JsonService::success();
+    return $this->suc();
   }
 }

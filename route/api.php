@@ -58,6 +58,15 @@ Route::group($fix, function() {
     Route::post('update', '/update');
     Route::get('recover', '/recover');
   })->prefix('api/Type');
+
+  Route::group('attr', function() {
+    Route::post('add', '/add');
+    Route::get('get', '/get');
+    Route::get('getById', '/getById');
+    Route::get('getTypesById', '/getTypesById');
+    Route::get('del', '/del');
+    Route::post('update', '/update');
+  })->prefix('api/Attr');
   
 })->prefix($fix . '/')
 ->header('Access-Control-Allow-Credentials', 'true')
