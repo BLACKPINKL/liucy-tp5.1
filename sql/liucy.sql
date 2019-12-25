@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50726
 File Encoding         : 65001
 
-Date: 2019-12-24 16:52:43
+Date: 2019-12-25 16:59:04
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -181,7 +181,19 @@ DROP TABLE IF EXISTS `liucy_goods`;
 CREATE TABLE `liucy_goods` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `goods_name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `goods_num` char(20) DEFAULT NULL COMMENT '商品编号',
+  `goods_des` text COMMENT '商品描述',
+  `thumb` varchar(100) DEFAULT NULL,
+  `mark_price` decimal(10,2) DEFAULT '0.00' COMMENT '原价',
+  `shop_price` decimal(10,2) DEFAULT '0.00' COMMENT '销售价',
+  `on_sale` tinyint(1) DEFAULT '1' COMMENT '是否在售     1：是 0：否',
+  `category_id` smallint(6) DEFAULT NULL COMMENT '所属分类',
+  `brand_id` smallint(6) DEFAULT '0' COMMENT '所属品牌',
+  `type_id` smallint(6) DEFAULT '0' COMMENT '所属类型',
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`),
+  KEY `brand_id` (`brand_id`),
+  KEY `type_id` (`type_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------

@@ -67,6 +67,15 @@ Route::group($fix, function() {
     Route::get('del', '/del');
     Route::post('update', '/update');
   })->prefix('api/Attr');
+
+  Route::group('goods', function() {
+    Route::post('add', '/add');
+    Route::get('get', '/get');
+    Route::get('getById', '/getById');
+    Route::get('getTypesById', '/getTypesById');
+    Route::get('del', '/del');
+    Route::post('update', '/update');
+  })->prefix('api/Goods');
   
 })->prefix($fix . '/')
 ->header('Access-Control-Allow-Credentials', 'true')
