@@ -2,6 +2,8 @@
 namespace app\index\controller;
 use app\api\model\User;
 use \service\JsonService;
+use  think\facade\Cache;
+// use think\cache\driver\Redis;
 use think\Db;
 
 class Index
@@ -14,32 +16,26 @@ class Index
 
     public function hello($name = 'ThinkPHP5')
     {
-        // $user = User::where('account', [null])->find();
-        // dump($user);
-        $str = 'world';
-        // dump($user->salt);
-        $str = encodeStr('4124BC0A9335C27F086F24BA207A4912', 'c1X57P5g87017I8');
-        // $data = JsonService::success(['aa' => 'asdasd']);
-        // dump($data);
-        // $brand = Db::name('brand')::onlyTrashed()->find(1);
-        // $brand->restore();
+        // 使用redis
+        
+        // $redis = Cache::store('redis');
 
-        $data = [
-            'a' => 123,
-            'b' => 456,
-            'c' => 789,
-            'd' => 012
-        ];
+        // // 获取redis对象
+        // $redisHanlder = $redis->handler();
+        // $redisHanlder->del('goods_store');
+        //    $redis->set('bbb', 789);
+        //    $data = $redis->get('bbb');
+        //    dump($data);
 
-        $arr = array_filter($data, function($key) {
-            // if() {
-            //     return $key;
-            // }
-            // return ;
-            dump(array_key_exists($key, ['b' => 1, 'd' => 2]));
-            
-        }, ARRAY_FILTER_USE_KEY);
-        dump($arr);
-        return 'hello,' . $str;
+        // 实现商品秒杀
+        // 1.
+        // for ($i=0; $i < 100; $i++) { 
+        //     // 添加100件商品入队
+        //     $redisHanlder->rpush('goods_store', 1);
+        // }
+
+        // 2. 设置秒杀时间
+        // $redisHanlder->setTimeout('goods_store', 30);
+
     }
 }
