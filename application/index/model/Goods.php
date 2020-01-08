@@ -6,8 +6,15 @@ use think\Model;
 
 class Goods extends Model{
   
-  public static function get($id) {
-    $res = self::field('count', 'amount')->where('id', $id)->find();
+  public static function getGoods($id) {
+    $res = self::where('id', $id)->find();
+    return $res;
+  }
+  public static function updateGoods($id) {
+    $res = self::where('id', $id)->find();
+    $res->dec('count', 1);
+    $res->save();
+    
     return $res;
   }
 }

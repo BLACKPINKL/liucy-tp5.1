@@ -15,6 +15,8 @@ Route::get('think', function () {
 
 Route::get('hello', 'index/hello');
 
+Route::get('kill', 'index/Kill/index');
+
 return [
 
 ];
