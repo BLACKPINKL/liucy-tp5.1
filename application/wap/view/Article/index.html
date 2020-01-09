@@ -1,0 +1,31 @@
+
+{extend name="layout:layout"/}
+
+{block name="head"}
+  <!-- 公共头部 -->
+  {include file="layout/head" title="文章列表"}
+  <link rel="stylesheet" href="WAP_PATH/css/index.css">
+{/block}
+
+{block name="content"}
+  <div class="article-body">
+    <div class="article-list">
+        <ul>
+          {volist name="list" id="item"}
+            <li class="article-item">
+              <div>
+                <span>{$item.user.username}</span>
+                <span>·</span>
+                <span>{$item.create_time}</span>
+                <span>·</span>
+                <span>{$item.category.name}</span>
+              </div>
+              <a href="" class="article-title">{$item.title}</a>
+            </li>
+            <hr class="layui-bg-green">
+          {/volist}
+        </ul>
+      
+    </div>
+  </div>
+{/block}

@@ -11,9 +11,7 @@ class Goods extends Model{
     return $res;
   }
   public static function updateGoods($id) {
-    $res = self::where('id', $id)->find();
-    $res->dec('count', 1);
-    $res->save();
+    $res = self::where('id', $id)->setDec('count');
     
     return $res;
   }

@@ -21,7 +21,7 @@ return [
     // 模板路径
     'view_path'    => '',
     // 模板后缀
-    'view_suffix'  => 'htm',
+    'view_suffix'  => 'html',
     // 模板文件名分隔符
     'view_depr'    => DIRECTORY_SEPARATOR,
     // 模板引擎普通标签开始标记
@@ -32,4 +32,9 @@ return [
     'taglib_begin' => '{',
     // 标签库标签结束标记
     'taglib_end'   => '}',
+    // 输出模板替换
+    'tpl_replace_string' => [
+        'PLUG_PATH' => '/static/plugin',
+        'WAP_PATH' => '/static/wap',
+    ]
 ];

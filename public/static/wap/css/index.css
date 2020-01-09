@@ -1,0 +1,13 @@
+.article-body {
+  padding: 15px;
+  margin-top: 20px;
+}
+.article-item {
+  margin: 10px 0;
+}
+.article-title {
+  font-size: 1.2rem;
+  color: #2e3135;
+  line-height: 1.2;
+  font-weight: 800;
+}
