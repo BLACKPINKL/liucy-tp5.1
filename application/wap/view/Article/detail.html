@@ -3,7 +3,7 @@
 {block name="head"}
   <!-- 公共头部 -->
   {include file="layout/head" title="文章详情"}
-  <!-- <link rel="stylesheet" href="WAP_PATH/css/index.css"> -->
+  <link rel="stylesheet" href="WAP_PATH/css/detail.css">
 {/block}
 
 {block name="content"}
@@ -11,8 +11,68 @@
   <p>{$data.content}</p>
 
   <div class="detail-comment">
-    <button class="layui-btn layui-btn-sm layui-btn-radius">查看评论</button>
-    <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary">点赞</button>
     
+    
+    <button id="btn-comment" class="layui-btn layui-btn-sm layui-btn-radius">查看评论</button>
+    <div class="detail-comment-box">
+      <div class="detail-comment-topbar">
+        <div class="center">
+            1839条评论
+        </div>
+        <div class="center"> 
+          切换为时间排序
+        </div>
+      </div>
+      <div tabindex="1" class="detail-comment-input layui-form">
+        <div class="detail-comment-edit" placeholder='写下你的评论..' contenteditable="true"></div>
+      </div>
+      <div>
+        <ul>
+          <!-- 主评论 -->
+          <li class="detail-comment-item-root">
+            <div class="detail-comment-user">
+              <span class="center">xx用户</span>
+              <span class="center">2个月前</span>
+              
+            </div>
+            <div class="detail-comment-content">
+              <p>评论内容asdsadsadasdsad</p>
+            </div>
+            <div class="detail-comment-like">
+              <span class="detail-comment-praise">
+                <i class="layui-icon layui-icon-praise"></i>   
+                <i>0</i>
+              </span>
+              <span class="detail-comment-reply">
+                <i class="layui-icon layui-icon-reply-fill"></i>   
+                <i>回复</i>
+              </span>
+            </div>
+          </li>
+          <!-- 回复评论 -->
+          <li class="detail-comment-item">
+            <div class="detail-comment-user">
+              <span class="center">xx用户 回复 xx用户</span>
+              <span class="center">2个月前</span>
+              
+            </div>
+            <div class="detail-comment-content">
+                <p>评论内容asdsadsadasdsad</p>
+            </div>
+            <div class="detail-comment-like">
+              <span class="detail-comment-reply">
+                  <i class="layui-icon layui-icon-reply-fill"></i>   
+                  <i>回复</i>
+              </span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  
   </div>
+{/block}
+
+{block name="js"}
+  {js href="WAP_PATH/js/detail.js"}
 {/block}
