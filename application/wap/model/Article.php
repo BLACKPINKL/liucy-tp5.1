@@ -21,7 +21,11 @@ class Article extends Model {
     $res = self::all([], 'user,category');
     return $res->toArray();
   }
-
+  public static function getArtById($id) {
+    $res = self::get($id);
+    return $res->toArray();
+  }
+  // 计算时间差
   protected function timeDiff($startTime, $endTime) {
     if($startTime < $endTime){
       $starttime = $startTime;

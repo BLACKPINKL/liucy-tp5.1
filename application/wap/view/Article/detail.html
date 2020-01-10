@@ -1,0 +1,18 @@
+{extend name="layout:layout"/}
+
+{block name="head"}
+  <!-- 公共头部 -->
+  {include file="layout/head" title="文章详情"}
+  <!-- <link rel="stylesheet" href="WAP_PATH/css/index.css"> -->
+{/block}
+
+{block name="content"}
+  <h1>{$data.title}</h1>
+  <p>{$data.content}</p>
+
+  <div class="detail-comment">
+    <button class="layui-btn layui-btn-sm layui-btn-radius">查看评论</button>
+    <button class="layui-btn layui-btn-sm layui-btn-radius layui-btn-primary">点赞</button>
+    
+  </div>
+{/block}
