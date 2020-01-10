@@ -29,7 +29,6 @@
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #ccc;
   
 }
 
@@ -37,13 +36,15 @@
 .detail-comment-input {
   border: 1px solid #ccc;
   padding: 10px 12px;
+  margin: 10px 0;
   border-radius: 5px;
   transition: border-color cubic-bezier(0.075, 0.82, 0.165, 1);
+  outline: none;
 }
-.detail-comment-input:focus {
+/* .detail-comment-input:focus {
   border-color: #009688;
 
-}
+} */
 
 
 .detail-comment-edit {
@@ -54,9 +55,6 @@
   
 }
 
-.detail-comment-edit:focus .detail-comment-input{
-  border-color: #009688;
-}
 
 .detail-comment-edit:empty::before {
   content: attr(placeholder);
