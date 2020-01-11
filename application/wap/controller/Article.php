@@ -3,6 +3,7 @@ namespace app\wap\controller;
 
 use think\Controller;
 use app\wap\model\Article as ArticleModel;
+use app\wap\model\Comment as CommentModel;
 // 文章
 class Article extends Controller {
   public function index() {
@@ -27,5 +28,13 @@ class Article extends Controller {
     $this->assign('data', $article);
     return view();
 
+  }
+
+  public function comment() {
+    $data = request()->param();
+    CommentModel::add($data);
+
+    // TODO
+    return json('成功');
   }
 }

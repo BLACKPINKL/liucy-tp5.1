@@ -32,6 +32,11 @@
   
 }
 
+/* .flex {
+  display: flex;
+  justify-content: space-between;
+} */
+
 
 .detail-comment-input {
   border: 1px solid #ccc;
@@ -71,6 +76,12 @@
 .center {
   display: flex;
   align-items: center;
+}
+.detail-comment-btn {
+  transform: translate(50%, 50%);
+}
+.stretch {
+  align-items: stretch;
 }
 .detail-comment-user {
   display: flex;

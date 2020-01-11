@@ -7,6 +7,7 @@
 {/block}
 
 {block name="content"}
+{php}dump($data){/php}
   <h1>{$data.title}</h1>
   <p>{$data.content}</p>
 
@@ -23,12 +24,14 @@
           切换为时间排序
         </div>
       </div>
-      <div>
-        <div tabindex="1" class="detail-comment-input layui-form">
-          <div id="id-edit"class="detail-comment-edit" placeholder='写下你的评论..' contenteditable="true"></div>
+      <div class="layui-row" style="display: flex;">
+        <div class="layui-col-md11 stretch">
+          <div tabindex="1" class="detail-comment-input">
+            <div id="id-edit" name="comment" class="detail-comment-edit" placeholder='写下你的评论..' contenteditable="true"></div>
+          </div>
         </div>
-        <div>
-          <button class="layui-btn layui-btn-sm">发表</button>
+        <div class="layui-col-md1 stretch">
+          <button class="layui-btn layui-btn-sm detail-comment-btn" id="id-comment-btn">发表</button>
         </div>
       </div>
        
@@ -80,5 +83,71 @@
 {/block}
 
 {block name="js"}
-  {js href="WAP_PATH/js/detail.js"}
+<script>
+    layui.use(['layer'], () =>{
+  
+  // 获取jquery
+  let $ = layui.$
+  let layer = layui.layer
+  let val = ''
+  $('#btn-comment').on('click', function(e) {
+    // console.log(e);
+    let that = $(this)
+    // 切换评论状态
+    $('.detail-comment-box').toggle()
+    
+  })
+  
+  
+  $('#id-edit').on('input', function(e) {
+    let that = $(this)
+    val = that.text()
+  
+  })
+  
+  $('#id-edit').on('focus', function(e) {
+    console.log('focussssssssssss', e);
+    $('.detail-comment-input').css({
+      'border-color': '#5FB878'
+    })
+  })
+  $('#id-edit').on('blur', function(e) {
+    console.log('blur', e);
+    $('.detail-comment-input').css({
+      'border-color': '#ccc'
+    })
+  })
+  
+  
+  $('#id-comment-btn').on('click', function(e) {
+    if(!val) return layer.msg('请填写评论')
+  
+    let o = {
+      'compose_id': "{$data.id}",
+      content: val,
+      user_id: 2
+    }
+  
+    $.ajax({
+      url: 'comment',
+      method: 'post',
+      data: o,
+      success(res) {
+        console.log(res);
+        
+      }
+    })
+  })
+  
+  
+  
+    
+  
+  
+  });
+  
+  
+  
+  </script>
+  <!-- {js href="WAP_PATH/js/detail.js"} -->
 {/block}
