@@ -4,10 +4,10 @@
   <!-- 公共头部 -->
   {include file="layout/head" title="文章详情"}
   <link rel="stylesheet" href="WAP_PATH/css/detail.css">
+  <script src="PLUG_PATH/art-template/art-template.js"></script>
 {/block}
 
 {block name="content"}
-{php}dump($data){/php}
   <h1>{$data.title}</h1>
   <p>{$data.content}</p>
 
@@ -15,15 +15,72 @@
     
     
     <button id="btn-comment" class="layui-btn layui-btn-sm layui-btn-radius">查看评论</button>
-    <div class="detail-comment-box">
+    <script type="text/html" id="art-comment">
+      <% if (!comments.length) { %> 
+        <span>暂无评论。。</span>
+      <% } %>
+      
+      <% if (comments.length) { %> 
       <div class="detail-comment-topbar">
-        <div class="center">
-            1839条评论
-        </div>
-        <div class="center"> 
-          切换为时间排序
-        </div>
+          <div class="center">
+              {{comments.length}}条评论
+          </div>
+          <div class="center"> 
+            切换为时间排序
+          </div>
       </div>
+        
+         
+        <div>
+          
+          <% for(var i = 0; i < comments.length; i++){ %>
+            <% let comment = comments[i]%>
+            <ul>
+                <!-- 主评论 -->
+                <li class="detail-comment-item-root">
+                  <div class="detail-comment-user">
+                    <span class="center">{{comment.user.username}}</span>
+                    <span class="center">2个月前</span>
+                    
+                  </div>
+                  <div class="detail-comment-content">
+                    <p>{{comment.content}}</p>
+                  </div>
+                  <div class="detail-comment-like">
+                    <span class="detail-comment-praise">
+                      <i class="layui-icon layui-icon-praise"></i>   
+                      <i>{{comment.like}}</i>
+                    </span>
+                    <span class="detail-comment-reply">
+                      <i class="layui-icon layui-icon-reply-fill"></i>   
+                      <i>回复</i>
+                    </span>
+                  </div>
+                </li>
+                <!-- 回复评论 -->
+                <li class="detail-comment-item">
+                  <div class="detail-comment-user">
+                    <span class="center">xx用户 回复 xx用户</span>
+                    <span class="center">2个月前</span>
+                    
+                  </div>
+                  <div class="detail-comment-content">
+                      <p>评论内容asdsadsadasdsad</p>
+                  </div>
+                  <div class="detail-comment-like">
+                    <span class="detail-comment-reply">
+                        <i class="layui-icon layui-icon-reply-fill"></i>   
+                        <i>回复</i>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+          <% } %>
+          
+        </div>
+        <% } %>
+    </script>
+    <div class="detail-comment-box">
       <div class="layui-row" style="display: flex;">
         <div class="layui-col-md11 stretch">
           <div tabindex="1" class="detail-comment-input">
@@ -34,48 +91,8 @@
           <button class="layui-btn layui-btn-sm detail-comment-btn" id="id-comment-btn">发表</button>
         </div>
       </div>
-       
-      <div>
-        <ul>
-          <!-- 主评论 -->
-          <li class="detail-comment-item-root">
-            <div class="detail-comment-user">
-              <span class="center">xx用户</span>
-              <span class="center">2个月前</span>
-              
-            </div>
-            <div class="detail-comment-content">
-              <p>评论内容asdsadsadasdsad</p>
-            </div>
-            <div class="detail-comment-like">
-              <span class="detail-comment-praise">
-                <i class="layui-icon layui-icon-praise"></i>   
-                <i>0</i>
-              </span>
-              <span class="detail-comment-reply">
-                <i class="layui-icon layui-icon-reply-fill"></i>   
-                <i>回复</i>
-              </span>
-            </div>
-          </li>
-          <!-- 回复评论 -->
-          <li class="detail-comment-item">
-            <div class="detail-comment-user">
-              <span class="center">xx用户 回复 xx用户</span>
-              <span class="center">2个月前</span>
-              
-            </div>
-            <div class="detail-comment-content">
-                <p>评论内容asdsadsadasdsad</p>
-            </div>
-            <div class="detail-comment-like">
-              <span class="detail-comment-reply">
-                  <i class="layui-icon layui-icon-reply-fill"></i>   
-                  <i>回复</i>
-              </span>
-            </div>
-          </li>
-        </ul>
+      <div class="detail-comment-list">
+
       </div>
     </div>
   
@@ -84,18 +101,40 @@
 
 {block name="js"}
 <script>
-    layui.use(['layer'], () =>{
+  layui.use(['layer'], () =>{
   
   // 获取jquery
   let $ = layui.$
   let layer = layui.layer
   let val = ''
+  let $a = '1232'
+  
+
+  // 查看评论
   $('#btn-comment').on('click', function(e) {
     // console.log(e);
     let that = $(this)
+    let commentBox = $('.detail-comment-box')
+    let commentList = $('.detail-comment-list')
     // 切换评论状态
-    $('.detail-comment-box').toggle()
+    commentBox.toggle()
     
+
+    $.ajax({
+      url: 'http://www.liucy.io/comment/get',
+      method: 'get',
+      data: {
+        id: "{$data.id}",
+      },
+      success(res) {
+        console.log(res);
+        let data = {
+          comments: res
+        }
+        let html = template('art-comment', data)
+        commentList.html(html)
+      }
+    })
   })
   
   
@@ -125,18 +164,35 @@
     let o = {
       'compose_id': "{$data.id}",
       content: val,
-      user_id: 2
+      user_id: 1
     }
-  
+    let commentBox = $('.detail-comment-list')
     $.ajax({
       url: 'comment',
       method: 'post',
       data: o,
       success(res) {
         console.log(res);
-        
+        $.ajax({
+          url: 'http://www.liucy.io/comment/get',
+          method: 'get',
+          data: {
+            id: "{$data.id}",
+          },
+          success(res) {
+            console.log(res);
+            $('#id-edit').text('')
+            let data = {
+              comments: res
+            }
+            let html = template('art-comment', data)
+            commentBox.html(html)
+          }
+        })
       }
     })
+
+
   })
   
   

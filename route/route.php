@@ -17,6 +17,9 @@ Route::get('hello', 'index/hello');
 
 Route::get('kill', 'index/Kill/index');
 
+
+
+
 return [
 
 ];

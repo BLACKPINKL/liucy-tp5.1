@@ -33,8 +33,9 @@ class Article extends Controller {
   public function comment() {
     $data = request()->param();
     CommentModel::add($data);
-
     // TODO
-    return json('成功');
+    return json(['msg' => 'ok']);
   }
+
+  
 }
