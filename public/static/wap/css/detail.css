@@ -32,10 +32,16 @@
   
 }
 
-/* .flex {
+
+
+.flex {
   display: flex;
-  justify-content: space-between;
-} */
+  
+}
+
+.comment-reply {
+  display: none;
+}
 
 
 .detail-comment-input {

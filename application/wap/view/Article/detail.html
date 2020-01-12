@@ -1,209 +1,193 @@
 {extend name="layout:layout"/}
 
 {block name="head"}
-  <!-- 公共头部 -->
-  {include file="layout/head" title="文章详情"}
-  <link rel="stylesheet" href="WAP_PATH/css/detail.css">
-  <script src="PLUG_PATH/art-template/art-template.js"></script>
+<!-- 公共头部 -->
+{include file="layout/head" title="文章详情"}
+<link rel="stylesheet" href="WAP_PATH/css/detail.css">
+<script src="PLUG_PATH/art-template/art-template.js"></script>
 {/block}
 
 {block name="content"}
-  <h1>{$data.title}</h1>
-  <p>{$data.content}</p>
+<h1>{$data.title}</h1>
+<p>{$data.content}</p>
 
-  <div class="detail-comment">
-    
-    
-    <button id="btn-comment" class="layui-btn layui-btn-sm layui-btn-radius">查看评论</button>
-    <script type="text/html" id="art-comment">
-      <% if (!comments.length) { %> 
-        <span>暂无评论。。</span>
-      <% } %>
-      
-      <% if (comments.length) { %> 
-      <div class="detail-comment-topbar">
-          <div class="center">
-              {{comments.length}}条评论
-          </div>
-          <div class="center"> 
-            切换为时间排序
-          </div>
-      </div>
-        
-         
-        <div>
-          
-          <% for(var i = 0; i < comments.length; i++){ %>
-            <% let comment = comments[i]%>
-            <ul>
-                <!-- 主评论 -->
-                <li class="detail-comment-item-root">
-                  <div class="detail-comment-user">
-                    <span class="center">{{comment.user.username}}</span>
-                    <span class="center">2个月前</span>
-                    
-                  </div>
-                  <div class="detail-comment-content">
-                    <p>{{comment.content}}</p>
-                  </div>
-                  <div class="detail-comment-like">
-                    <span class="detail-comment-praise">
-                      <i class="layui-icon layui-icon-praise"></i>   
-                      <i>{{comment.like}}</i>
-                    </span>
-                    <span class="detail-comment-reply">
-                      <i class="layui-icon layui-icon-reply-fill"></i>   
-                      <i>回复</i>
-                    </span>
-                  </div>
-                </li>
-                <!-- 回复评论 -->
-                <li class="detail-comment-item">
-                  <div class="detail-comment-user">
-                    <span class="center">xx用户 回复 xx用户</span>
-                    <span class="center">2个月前</span>
-                    
-                  </div>
-                  <div class="detail-comment-content">
-                      <p>评论内容asdsadsadasdsad</p>
-                  </div>
-                  <div class="detail-comment-like">
-                    <span class="detail-comment-reply">
-                        <i class="layui-icon layui-icon-reply-fill"></i>   
-                        <i>回复</i>
-                    </span>
-                  </div>
-                </li>
-              </ul>
-          <% } %>
-          
-        </div>
-        <% } %>
-    </script>
-    <div class="detail-comment-box">
-      <div class="layui-row" style="display: flex;">
-        <div class="layui-col-md11 stretch">
-          <div tabindex="1" class="detail-comment-input">
-            <div id="id-edit" name="comment" class="detail-comment-edit" placeholder='写下你的评论..' contenteditable="true"></div>
-          </div>
-        </div>
-        <div class="layui-col-md1 stretch">
-          <button class="layui-btn layui-btn-sm detail-comment-btn" id="id-comment-btn">发表</button>
-        </div>
-      </div>
-      <div class="detail-comment-list">
+<div class="detail-comment">
 
+
+  <button id="btn-comment" class="layui-btn layui-btn-sm layui-btn-radius">查看评论</button>
+  
+  <!-- 模板 评论 -->
+  <script type="text/html" id="art-comment">
+    <% if (!comments.length) { %>
+    <span>暂无评论。。</span>
+    <% } %>
+
+    <% if (comments.length) { %>
+    <div class="detail-comment-topbar">
+      <div class="center">
+        {{comments.length}}条评论
+      </div>
+      <div class="center asd">
+        切换为时间排序
       </div>
     </div>
-  
+
+
+    <div>
+
+      <% for(var i = 0; i < comments.length; i++){ %>
+      <% let comment = comments[i]%>
+      <ul>
+        <!-- 主评论 -->
+        <li class="detail-comment-item-root">
+          <div class="detail-comment-user">
+            <span class="center">{{comment.username}}</span>
+            <span class="center">2个月前</span>
+
+          </div>
+          <div class="detail-comment-content">
+            <p>{{comment.content}}</p>
+          </div>
+          <div class="detail-comment-like">
+            <span class="detail-comment-praise">
+              <i class="layui-icon layui-icon-praise"></i>
+              <i>{{comment.like}}</i>
+            </span>
+            <span class="detail-comment-reply">
+              <i class="layui-icon layui-icon-reply-fill"></i>
+              <span>回复</span>
+            </span>
+          </div>
+          
+          {include file="article/components/comment-edit" idName="comment-reply"}
+        </li>
+        <!-- 回复评论 -->
+        <li class="detail-comment-item">
+          <div class="detail-comment-user">
+            <span class="center">xx用户 回复 xx用户</span>
+            <span class="center">2个月前</span>
+
+          </div>
+          <div class="detail-comment-content">
+            <p>评论内容asdsadsadasdsad</p>
+          </div>
+          <div class="detail-comment-like">
+            <span class="detail-comment-reply">
+              <i class="layui-icon layui-icon-reply-fill"></i>
+              <i>回复</i>
+            </span>
+          </div>
+        </li>
+      </ul>
+      <% } %>
+
+    </div>
+    <% } %>
+  </script>
+
+  <!-- 评论 -->
+  <div class="detail-comment-box">
+    {include file="article/components/comment-edit" idName="comment-edit"}
+    
+    <div class="detail-comment-list">
+
+    </div>
   </div>
+
+</div>
 {/block}
 
 {block name="js"}
 <script>
-  layui.use(['layer'], () =>{
-  
-  // 获取jquery
-  let $ = layui.$
-  let layer = layui.layer
-  let val = ''
-  let $a = '1232'
-  
+  layui.use(['layer'], () => {
 
-  // 查看评论
-  $('#btn-comment').on('click', function(e) {
-    // console.log(e);
-    let that = $(this)
-    let commentBox = $('.detail-comment-box')
-    let commentList = $('.detail-comment-list')
-    // 切换评论状态
-    commentBox.toggle()
-    
+    // 获取jquery
+    let $ = layui.$
+    let layer = layui.layer
+    let val = ''
 
-    $.ajax({
-      url: 'http://www.liucy.io/comment/get',
-      method: 'get',
-      data: {
-        id: "{$data.id}",
-      },
-      success(res) {
-        console.log(res);
-        let data = {
-          comments: res
+    function loadComments() {
+      let commentList = $('.detail-comment-list')
+      $.ajax({
+        url: 'http://www.liucy.io/comment/get',
+        method: 'get',
+        data: {
+          id: "{$data.id}",
+        },
+        success(res) {
+          console.log(res);
+          let data = {comments: res}
+          let html = template('art-comment', data)
+          commentList.html(html)
+          $('.detail-comment-reply').on('click', function(e) {
+            console.log(e);
+            
+          })
         }
-        let html = template('art-comment', data)
-        commentList.html(html)
-      }
-    })
-  })
-  
-  
-  $('#id-edit').on('input', function(e) {
-    let that = $(this)
-    val = that.text()
-  
-  })
-  
-  $('#id-edit').on('focus', function(e) {
-    console.log('focussssssssssss', e);
-    $('.detail-comment-input').css({
-      'border-color': '#5FB878'
-    })
-  })
-  $('#id-edit').on('blur', function(e) {
-    console.log('blur', e);
-    $('.detail-comment-input').css({
-      'border-color': '#ccc'
-    })
-  })
-  
-  
-  $('#id-comment-btn').on('click', function(e) {
-    if(!val) return layer.msg('请填写评论')
-  
-    let o = {
-      'compose_id': "{$data.id}",
-      content: val,
-      user_id: 1
+      })
     }
-    let commentBox = $('.detail-comment-list')
-    $.ajax({
-      url: 'comment',
-      method: 'post',
-      data: o,
-      success(res) {
-        console.log(res);
-        $.ajax({
-          url: 'http://www.liucy.io/comment/get',
-          method: 'get',
-          data: {
-            id: "{$data.id}",
-          },
-          success(res) {
-            console.log(res);
-            $('#id-edit').text('')
-            let data = {
-              comments: res
-            }
-            let html = template('art-comment', data)
-            commentBox.html(html)
-          }
-        })
-      }
+
+
+    // 查看评论
+    $('#btn-comment').on('click', function (e) {
+      // console.log(e);
+      let that = $(this)
+      let commentBox = $('.detail-comment-box')
+      
+      // 切换评论状态
+      commentBox.toggle()
+
+      // 加载评论列表
+      loadComments()
     })
 
-
-  })
-  
-  
-  
+    // 回复评论
     
-  
-  
-  });
-  
-  
-  
-  </script>
-  <!-- {js href="WAP_PATH/js/detail.js"} -->
+    
+
+
+    $('#id-edit').on('input', function (e) {
+      let that = $(this)
+      val = that.text()
+
+    })
+
+    $('#id-edit').on('focus', function (e) {
+      console.log('focussssssssssss', e);
+      $('.detail-comment-input').css({
+        'border-color': '#5FB878'
+      })
+    })
+    $('#id-edit').on('blur', function (e) {
+      console.log('blur', e);
+      $('.detail-comment-input').css({
+        'border-color': '#ccc'
+      })
+    })
+
+    // 文章评论
+    $('#id-comment-btn').on('click', function (e) {
+      if (!val) return layer.msg('请填写评论')
+
+      let data = {
+        'compose_id': "{$data.id}",
+        content: val,
+        user_id: 3
+      }
+      
+      $.ajax({
+        url: 'comment',
+        method: 'post',
+        data,
+        success(res) {
+          console.log(res);
+          // 清空文本框内容
+          $('#id-edit').text('')
+          // 加载评论列表
+          loadComments()
+        }
+      })
+    })
+  })
+</script>
 {/block}
