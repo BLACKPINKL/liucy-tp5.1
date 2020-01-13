@@ -12,14 +12,13 @@
 <p>{$data.content}</p>
 
 <div class="detail-comment">
-
-
   <button id="btn-comment" class="layui-btn layui-btn-sm layui-btn-radius">查看评论</button>
   
   <!-- 模板 评论 -->
+  
   <script type="text/html" id="art-comment">
     <% if (!comments.length) { %>
-    <span>暂无评论。。</span>
+      <span>暂无评论。。</span>
     <% } %>
 
     <% if (comments.length) { %>
@@ -53,7 +52,7 @@
               <i class="layui-icon layui-icon-praise"></i>
               <i>{{comment.like}}</i>
             </span>
-            <span data-reply_type="1" data-comment_id="{{comment.id}}" class="detail-comment-reply">
+            <span data-reply_type="1" data-to_user="{{comment.user_id}}" data-comment_id="{{comment.id}}" class="detail-comment-reply">
               <i class="layui-icon layui-icon-reply-fill"></i>
               <span>回复</span>
             </span>
@@ -62,20 +61,20 @@
           {include file="article/components/comment-edit" idName="comment-reply" type="reply-com"}
         </li>
         <!-- 回复评论 -->
-        <% if(comments.reply.length) { %>
-        <% for(var i = 0; i < comments.reply.length; i++){ %>
-        <% let reply = comments.reply[i]%>
-        <li class="detail-comment-item">
+        <% if(comment.reply.length) {%>
+        <% for(let i = 0; i < comment.reply.length; i++){ %>
+          <% let reply = comment.reply[i]%>
+          <li class="detail-comment-item">
           <div class="detail-comment-user">
-            <span class="center">xx用户 回复 xx用户</span>
+            <span class="center">{{reply.username}} 回复 {{reply.to_username}}</span>
             <span class="center">2个月前</span>
 
           </div>
           <div class="detail-comment-content">
-            <p>评论内容asdsadsadasdsad</p>
+            <p>{{reply.content}}</p>
           </div>
           <div class="detail-comment-like">
-            <span data-reply_type="2" data-comment_id="{{comment.id}}" class="detail-comment-reply">
+            <span data-reply_type="2" data-to_user="{{reply.user_id}}" data-comment_id="{{reply.id}}" class="detail-comment-reply">
               <i class="layui-icon layui-icon-reply-fill"></i>
               <i>回复</i>
             </span>
@@ -84,11 +83,12 @@
           {include file="article/components/comment-edit" idName="comment-reply" type="reply-com"}
         </li>
         <% } %>
+        <% } %>
       </ul>
-      <% } %>
+      <%}%>
 
     </div>
-    <% } %>
+    <%}%>
   </script>
 
   <!-- 评论 -->
@@ -115,7 +115,8 @@
       type: '',
       val: '',
       reply_type: '',
-      comment_id: ''
+      comment_id: '',
+      to_user_id: ''
     }
   
     function loadComments() {
@@ -132,6 +133,7 @@
           let html = template('art-comment', data)
           commentList.html(html)
 
+          // 监听文本框
           $('.detail-comment-edit').on('input', function (e) {
             let that = $(this)
             let el = that.parents('.comment-edit').length ? that.parents('.comment-edit') : that.parents('.comment-reply')
@@ -190,7 +192,8 @@
                 comment_id: commentType.comment_id,
                 reply_type: commentType.reply_type,
                 reply_id: commentType.comment_id,
-                user_id: 5,
+                user_id: 1,
+                to_user_id: commentType.to_user_id,
                 content: commentType.val
               }
 
@@ -226,6 +229,7 @@
             let reply_el = self.parent().siblings('.comment-reply')
             commentType.reply_type = self.data('reply_type')
             commentType.comment_id = self.data('comment_id')
+            commentType.to_user_id = self.data('to_user')
             reply_el.toggle()
             
           

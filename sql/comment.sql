@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 13/01/2020 15:36:51
+ Date: 13/01/2020 22:51:04
 */
 
 SET NAMES utf8mb4;
@@ -73,9 +73,9 @@ CREATE TABLE `qin_comment`  (
   `compose_id` int(10) UNSIGNED NOT NULL COMMENT '所属主题',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论内容',
   `user_id` int(10) UNSIGNED NOT NULL COMMENT '评论用户',
-  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `like` int(5) UNSIGNED NOT NULL DEFAULT 0,
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '评论用户名',
+  `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户头像',
+  `like` int(5) NOT NULL DEFAULT 0 COMMENT '点赞数',
   `is_hot` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否为热评：1：是',
   `is_top` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否置顶：1：是',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态：1显示',
@@ -92,8 +92,8 @@ CREATE TABLE `qin_comment`  (
 -- ----------------------------
 -- Records of qin_comment
 -- ----------------------------
-INSERT INTO `qin_comment` VALUES (2, 1, 1, 'nishi shab?', 2, '撒旦', NULL, 0, 0, 0, 1, 1578894661);
-INSERT INTO `qin_comment` VALUES (3, 1, 1, '哈哈哈', 3, '地址', NULL, 0, 0, 0, 1, 1578893007);
+INSERT INTO `qin_comment` VALUES (1, 1, 1, 'asdasdasdasd', 1, 'adas', NULL, 0, 0, 0, 1, 1578819194);
+INSERT INTO `qin_comment` VALUES (3, 1, 1, '我是人才', 3, '程序', NULL, 0, 0, 0, 1, 1578820038);
 
 -- ----------------------------
 -- Table structure for qin_reply
@@ -105,7 +105,8 @@ CREATE TABLE `qin_reply`  (
   `reply_type` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '回复类型：1：回复评论，2：回复别人的回复',
   `reply_id` int(10) UNSIGNED NOT NULL COMMENT '如果回复类型为1：则是comment_id，反之是回复表的id',
   `user_id` int(10) UNSIGNED NOT NULL COMMENT '回复人',
-  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `to_user_id` int(11) UNSIGNED NOT NULL COMMENT '回复哪个用户',
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '回复内容',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态',
@@ -115,12 +116,13 @@ CREATE TABLE `qin_reply`  (
   INDEX `idx_reply_type`(`reply_type`) USING BTREE,
   INDEX `idx_user_id`(`user_id`) USING BTREE,
   INDEX `idx_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qin_reply
 -- ----------------------------
-INSERT INTO `qin_reply` VALUES (1, 2, 1, 2, 5, '方式', NULL, '撒旦撒', 1, 1578900368);
+INSERT INTO `qin_reply` VALUES (1, 1, 1, 1, 5, 1, '第三方', NULL, '回复测试1', 1, 1578919630);
+INSERT INTO `qin_reply` VALUES (2, 1, 2, 1, 1, 5, 'adas', NULL, '回复测试2', 1, 1578926786);
 
 -- ----------------------------
 -- Table structure for qin_user
@@ -131,17 +133,20 @@ CREATE TABLE `qin_user`  (
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qin_user
 -- ----------------------------
-INSERT INTO `qin_user` VALUES (1, 'asd', NULL);
-INSERT INTO `qin_user` VALUES (2, '撒旦', NULL);
-INSERT INTO `qin_user` VALUES (3, '地址', NULL);
-INSERT INTO `qin_user` VALUES (4, 'V东西', NULL);
-INSERT INTO `qin_user` VALUES (5, '方式', NULL);
-INSERT INTO `qin_user` VALUES (6, '认为', NULL);
-INSERT INTO `qin_user` VALUES (7, '福瑞达', NULL);
+INSERT INTO `qin_user` VALUES (1, 'adas', NULL);
+INSERT INTO `qin_user` VALUES (2, '反倒是', NULL);
+INSERT INTO `qin_user` VALUES (3, '程序', NULL);
+INSERT INTO `qin_user` VALUES (4, '第三方第三方', NULL);
+INSERT INTO `qin_user` VALUES (5, '第三方', NULL);
+INSERT INTO `qin_user` VALUES (6, '地方', NULL);
+INSERT INTO `qin_user` VALUES (7, '打法', NULL);
+INSERT INTO `qin_user` VALUES (8, '一回合', NULL);
+INSERT INTO `qin_user` VALUES (9, '事情', NULL);
+INSERT INTO `qin_user` VALUES (10, '改变', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
