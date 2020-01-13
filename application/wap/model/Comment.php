@@ -17,7 +17,7 @@ class Comment extends Model {
 
     // 获取用户id
     $user_id = $data['user_id'];
-    $user = User::get($user_id)->toArray();
+    $user = User::where('id', $user_id)->toArray();
     $data += $user;
     $res = self::create($data);
     return $res;

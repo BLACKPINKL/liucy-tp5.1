@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : qin
+ Source Server         : qinjianfei
  Source Server Type    : MySQL
  Source Server Version : 50726
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 09/01/2020 16:46:48
+ Date: 13/01/2020 15:36:51
 */
 
 SET NAMES utf8mb4;
@@ -73,6 +73,9 @@ CREATE TABLE `qin_comment`  (
   `compose_id` int(10) UNSIGNED NOT NULL COMMENT '所属主题',
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '评论内容',
   `user_id` int(10) UNSIGNED NOT NULL COMMENT '评论用户',
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `like` int(5) UNSIGNED NOT NULL DEFAULT 0,
   `is_hot` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否为热评：1：是',
   `is_top` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否置顶：1：是',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态：1显示',
@@ -84,7 +87,13 @@ CREATE TABLE `qin_comment`  (
   INDEX `idx_is_hot`(`is_hot`) USING BTREE,
   INDEX `idx_is_top`(`is_top`) USING BTREE,
   INDEX `idx_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qin_comment
+-- ----------------------------
+INSERT INTO `qin_comment` VALUES (2, 1, 1, 'nishi shab?', 2, '撒旦', NULL, 0, 0, 0, 1, 1578894661);
+INSERT INTO `qin_comment` VALUES (3, 1, 1, '哈哈哈', 3, '地址', NULL, 0, 0, 0, 1, 1578893007);
 
 -- ----------------------------
 -- Table structure for qin_reply
@@ -96,6 +105,8 @@ CREATE TABLE `qin_reply`  (
   `reply_type` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '回复类型：1：回复评论，2：回复别人的回复',
   `reply_id` int(10) UNSIGNED NOT NULL COMMENT '如果回复类型为1：则是comment_id，反之是回复表的id',
   `user_id` int(10) UNSIGNED NOT NULL COMMENT '回复人',
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '回复内容',
   `status` tinyint(1) UNSIGNED NULL DEFAULT 1 COMMENT '状态',
   `create_time` int(10) UNSIGNED NOT NULL,
@@ -104,7 +115,12 @@ CREATE TABLE `qin_reply`  (
   INDEX `idx_reply_type`(`reply_type`) USING BTREE,
   INDEX `idx_user_id`(`user_id`) USING BTREE,
   INDEX `idx_status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qin_reply
+-- ----------------------------
+INSERT INTO `qin_reply` VALUES (1, 2, 1, 2, 5, '方式', NULL, '撒旦撒', 1, 1578900368);
 
 -- ----------------------------
 -- Table structure for qin_user
@@ -112,20 +128,20 @@ CREATE TABLE `qin_reply`  (
 DROP TABLE IF EXISTS `qin_user`;
 CREATE TABLE `qin_user`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `username` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户名',
-  `password` char(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '密码',
-  `avatar` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像',
-  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '状态',
-  `create_time` int(10) NOT NULL DEFAULT CURRENT_TIMESTAMP(10),
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `idx_status`(`status`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+  `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `avatar` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qin_user
 -- ----------------------------
-INSERT INTO `qin_user` VALUES (1, '柳成荫', '4679e9a3adf49c3c898ad531c1633fc7', NULL, 1, 1578542412);
-INSERT INTO `qin_user` VALUES (2, 'asd', '202cb962ac59075b964b07152d234b70', NULL, 1, 1578542600);
-INSERT INTO `qin_user` VALUES (3, 'asscxc', '140b543013d988f4767277b6f45ba542', NULL, 1, 1578542601);
+INSERT INTO `qin_user` VALUES (1, 'asd', NULL);
+INSERT INTO `qin_user` VALUES (2, '撒旦', NULL);
+INSERT INTO `qin_user` VALUES (3, '地址', NULL);
+INSERT INTO `qin_user` VALUES (4, 'V东西', NULL);
+INSERT INTO `qin_user` VALUES (5, '方式', NULL);
+INSERT INTO `qin_user` VALUES (6, '认为', NULL);
+INSERT INTO `qin_user` VALUES (7, '福瑞达', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

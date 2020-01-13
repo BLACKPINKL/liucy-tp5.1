@@ -53,15 +53,18 @@
               <i class="layui-icon layui-icon-praise"></i>
               <i>{{comment.like}}</i>
             </span>
-            <span class="detail-comment-reply">
+            <span data-reply_type="1" data-comment_id="{{comment.id}}" class="detail-comment-reply">
               <i class="layui-icon layui-icon-reply-fill"></i>
               <span>回复</span>
             </span>
           </div>
           
-          {include file="article/components/comment-edit" idName="comment-reply"}
+          {include file="article/components/comment-edit" idName="comment-reply" type="reply-com"}
         </li>
         <!-- 回复评论 -->
+        <% if(comments.reply.length) { %>
+        <% for(var i = 0; i < comments.reply.length; i++){ %>
+        <% let reply = comments.reply[i]%>
         <li class="detail-comment-item">
           <div class="detail-comment-user">
             <span class="center">xx用户 回复 xx用户</span>
@@ -72,12 +75,15 @@
             <p>评论内容asdsadsadasdsad</p>
           </div>
           <div class="detail-comment-like">
-            <span class="detail-comment-reply">
+            <span data-reply_type="2" data-comment_id="{{comment.id}}" class="detail-comment-reply">
               <i class="layui-icon layui-icon-reply-fill"></i>
               <i>回复</i>
             </span>
           </div>
+
+          {include file="article/components/comment-edit" idName="comment-reply" type="reply-com"}
         </li>
+        <% } %>
       </ul>
       <% } %>
 
@@ -87,7 +93,7 @@
 
   <!-- 评论 -->
   <div class="detail-comment-box">
-    {include file="article/components/comment-edit" idName="comment-edit"}
+    {include file="article/components/comment-edit" idName="comment-edit" type="article-com"}
     
     <div class="detail-comment-list">
 
@@ -104,8 +110,14 @@
     // 获取jquery
     let $ = layui.$
     let layer = layui.layer
-    let val = ''
-
+    // 评论类型
+    let commentType = {
+      type: '',
+      val: '',
+      reply_type: '',
+      comment_id: ''
+    }
+  
     function loadComments() {
       let commentList = $('.detail-comment-list')
       $.ajax({
@@ -119,9 +131,104 @@
           let data = {comments: res}
           let html = template('art-comment', data)
           commentList.html(html)
-          $('.detail-comment-reply').on('click', function(e) {
-            console.log(e);
+
+          $('.detail-comment-edit').on('input', function (e) {
+            let that = $(this)
+            let el = that.parents('.comment-edit').length ? that.parents('.comment-edit') : that.parents('.comment-reply')
+            commentType.type = that.data('type')
+            commentType.val = that.text()
             
+            
+
+          })
+
+          $('.detail-comment-edit').on('focus', function (e) {
+            $('.detail-comment-input').css({
+              'border-color': '#5FB878'
+            })
+          })
+          $('.detail-comment-edit').on('blur', function (e) {
+            $('.detail-comment-input').css({
+              'border-color': '#ccc'
+            })
+          })
+
+
+          // 点击评论发表
+          $('.detail-comment-btn').on('click', function (e) {
+            if (!commentType.val) return layer.msg('请填写评论内容')
+            let self = $(this)
+            let edit_el = self.parent().prev().find('.detail-comment-edit')
+          
+            
+            let data = {
+              'compose_id': "{$data.id}",
+              content: commentType.val,
+              user_id: 2
+            }
+
+            // 判断当前类型是回复评论还是文章评论
+            if(commentType.type === 'article-com') {
+              // 评论
+              $.ajax({
+                url: 'comment',
+                method: 'post',
+                data,
+                success(res) {
+                  console.log(res);
+                  // 清空文本框内容
+                  edit_el.text('')
+                  // q清空保存的评论数据
+                  Object.keys(commentType).forEach(k => commentType[k] = '')
+                  // 加载评论列表
+                  loadComments()
+                }
+              })
+            } else {
+
+              let data = {
+                comment_id: commentType.comment_id,
+                reply_type: commentType.reply_type,
+                reply_id: commentType.comment_id,
+                user_id: 5,
+                content: commentType.val
+              }
+
+              console.log(data);
+              
+              // 回复评论
+              $.ajax({
+                url: 'http://www.liucy.io/comment/reply',
+                method: 'post',
+                data,
+                success(res) {
+                  console.log(res);
+                  // 清空文本框内容
+                  edit_el.text('')
+                  // q清空保存的评论数据
+                  Object.keys(commentType).forEach(k => commentType[k] = '')
+                  // 加载评论列表
+                  loadComments()
+                }
+              })
+            }
+            
+          })
+
+
+
+
+
+
+          // 点击回复按钮
+          $('.detail-comment-reply').on('click', function(e) {
+            let self = $(this)
+            let reply_el = self.parent().siblings('.comment-reply')
+            commentType.reply_type = self.data('reply_type')
+            commentType.comment_id = self.data('comment_id')
+            reply_el.toggle()
+            
+          
           })
         }
       })
@@ -141,53 +248,12 @@
       loadComments()
     })
 
-    // 回复评论
+
     
+
     
 
-
-    $('#id-edit').on('input', function (e) {
-      let that = $(this)
-      val = that.text()
-
-    })
-
-    $('#id-edit').on('focus', function (e) {
-      console.log('focussssssssssss', e);
-      $('.detail-comment-input').css({
-        'border-color': '#5FB878'
-      })
-    })
-    $('#id-edit').on('blur', function (e) {
-      console.log('blur', e);
-      $('.detail-comment-input').css({
-        'border-color': '#ccc'
-      })
-    })
-
-    // 文章评论
-    $('#id-comment-btn').on('click', function (e) {
-      if (!val) return layer.msg('请填写评论')
-
-      let data = {
-        'compose_id': "{$data.id}",
-        content: val,
-        user_id: 3
-      }
-      
-      $.ajax({
-        url: 'comment',
-        method: 'post',
-        data,
-        success(res) {
-          console.log(res);
-          // 清空文本框内容
-          $('#id-edit').text('')
-          // 加载评论列表
-          loadComments()
-        }
-      })
-    })
+    
   })
 </script>
 {/block}
