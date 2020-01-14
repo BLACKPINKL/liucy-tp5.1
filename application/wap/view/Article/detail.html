@@ -30,8 +30,6 @@
         切换为时间排序
       </div>
     </div>
-
-
     <div>
 
       <% for(var i = 0; i < comments.length; i++){ %>
@@ -74,7 +72,12 @@
             <p>{{reply.content}}</p>
           </div>
           <div class="detail-comment-like">
-            <span data-reply_type="2" data-to_user="{{reply.user_id}}" data-comment_id="{{reply.id}}" class="detail-comment-reply">
+            <span 
+            data-reply_type="2" 
+            data-to_user="{{reply.user_id}}" 
+            data-comment_id="{{comment.id}}" 
+            data-reply_id="{{reply.id}}"
+            class="detail-comment-reply">
               <i class="layui-icon layui-icon-reply-fill"></i>
               <i>回复</i>
             </span>
@@ -96,17 +99,17 @@
     {include file="article/components/comment-edit" idName="comment-edit" type="article-com"}
     
     <div class="detail-comment-list">
-
+      
     </div>
   </div>
-
+  
 </div>
 {/block}
 
 {block name="js"}
 <script>
   layui.use(['layer'], () => {
-
+    
     // 获取jquery
     let $ = layui.$
     let layer = layui.layer
@@ -116,7 +119,8 @@
       val: '',
       reply_type: '',
       comment_id: '',
-      to_user_id: ''
+      to_user_id: '',
+      reply_id: ''
     }
   
     function loadComments() {
@@ -191,8 +195,8 @@
               let data = {
                 comment_id: commentType.comment_id,
                 reply_type: commentType.reply_type,
-                reply_id: commentType.comment_id,
-                user_id: 1,
+                reply_id: commentType.reply_id,
+                user_id: 8,
                 to_user_id: commentType.to_user_id,
                 content: commentType.val
               }
@@ -230,6 +234,7 @@
             commentType.reply_type = self.data('reply_type')
             commentType.comment_id = self.data('comment_id')
             commentType.to_user_id = self.data('to_user')
+            commentType.reply_id = self.data('reply_id')
             reply_el.toggle()
             
           

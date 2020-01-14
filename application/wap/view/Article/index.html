@@ -9,6 +9,8 @@
 
 {block name="content"}
   <div class="article-body">
+    <button id="chinese" class="layui-btn layui-btn-primary">添加文章</button>
+    <button id="search" class="layui-btn">搜索文章</button>
     <div class="article-list">
         <ul>
           {volist name="list" id="item"}
@@ -28,4 +30,39 @@
       
     </div>
   </div>
+{/block}
+
+{block name="js"}
+  <script>
+    layui.use(['layer'], function() {
+      const $ = layui.$
+      $('#chinese').on('click', function() {
+        $.ajax({
+          url: 'add',
+          method: 'post',
+          data: {
+            title: '性价比最高的小米9手机'
+          },
+          success(res) {
+            console.log(res);
+            
+          }
+        })
+      })
+
+      $('#search').on('click', function() {
+        $.ajax({
+          url: 'search',
+          method: 'post',
+          data: {
+            title: '性价比手机'
+          },
+          success(res) {
+            console.log(res);
+            
+          }
+        })
+      })
+    })
+  </script>
 {/block}

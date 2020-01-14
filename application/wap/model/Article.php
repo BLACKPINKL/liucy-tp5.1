@@ -16,7 +16,10 @@ class Article extends Model {
     $now = date('Y-m-d H:i:s');
     return $this->timeDiff(strtotime($now), $value);
   }
-
+  public static function add($data) {
+    $res = self::create($data);
+    return $res;
+  }
   public static function getArts() {
     $res = self::all([], 'user,category');
     return $res->toArray();
