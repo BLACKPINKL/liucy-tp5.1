@@ -1,0 +1,29 @@
+{extend name="layout:layout"/}
+
+{block name="head"}
+  <!-- 公共头部 -->
+  {include file="layout/head" title="抽奖系统"}
+{/block}
+
+{block name="content"}
+  <h1>{{a}}</h1>
+  <el-button type="primary" @click="handleClick">主要按钮</el-button>
+{/block}
+
+{block name="js"}
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        a: 'hello thinkphp'
+      },
+      methods: {
+        handleClick(e) {
+          console.log('点击了');
+          
+        }
+      },
+    })
+  </script>
+
+{/block}
